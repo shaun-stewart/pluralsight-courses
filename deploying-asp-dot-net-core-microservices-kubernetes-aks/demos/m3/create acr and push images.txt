@@ -1,0 +1,12 @@
+az acr create --resource-group ps-demo-rg --name globoticketacr --sku Basic
+
+docker-compose -f docker-compose.yml -f docker-compose-build.override.yml build
+
+az acr login --name globoticketacr 
+
+// build all containers in release mode and then push them to the registry
+
+
+
+docker-compose -f docker-compose.yml -f docker-compose-build.override.yml push
+

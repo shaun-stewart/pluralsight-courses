@@ -1,0 +1,2 @@
+kubectl exec -it <nameofyourpod> bash
+curl -v http://localhost/api/categories

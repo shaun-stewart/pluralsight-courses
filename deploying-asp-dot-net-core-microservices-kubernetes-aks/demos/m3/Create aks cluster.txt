@@ -1,0 +1,26 @@
+az group create --name ps-demo-rg --location westeurope
+
+az aks create --resource-group ps-demo-rg --name GloboTicketCluster --node-count 1 --enable-addons monitoring --generate-ssh-keys --kubernetes-version 1.19.0
+
+az aks install-cli
+
+az aks get-credentials --resource-group ps-demo-rg --name GloboTicketCluster
+
+kubectl get nodes
+
+---- dashboard access:
+
+-- deploy latest new dahboard
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0/aio/deploy/recommended.yaml
+--create credentials
+kubectl apply -f dashboard-credentials.yaml
+
+kubectl proxy
+
+http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/.
+
+--get token to login as admin-user
+
+kubectl -n kubernetes-dashboard describe secret $(kubectl -n kubernetes-dashboard get secret | grep admin-user | awk '{print $1}')
+
+

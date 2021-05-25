@@ -1,0 +1,153 @@
+public class Order
+{
+	public string Name { get; set; }
+	public string Description { get; set; }
+	public DateTime LastUpdated { get; set; }
+}
+
+var orders = new List<Order>()
+            {
+                new Order() { Name = "Donec id elit non", LastUpdated = DateTime.Now.AddDays(-2), Description = "Maecenas sed diam eget risus varius blandit. Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit. Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit." },
+                new Order() { Name = "Maecenas sed diam eget risus", LastUpdated = DateTime.Now.AddDays(-3), Description = "Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit. Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit." },
+                new Order() { Name = "Maecenas sed diam eget risus", LastUpdated = DateTime.Now.AddDays(-8), Description = "Maecenas sed diam eget risus varius blandit. Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit." },
+                new Order() { Name = "Donec id elit non", LastUpdated = DateTime.Now.AddDays(-2), Description = "Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit. Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit." },
+                new Order() { Name = "Maecenas sed diam eget risus", LastUpdated = DateTime.Now.AddDays(-5), Description = "Maecenas sed diam eget risus varius blandit. Maecenas sed diam eget risus varius blandit. Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit." },
+                new Order() { Name = "Donec id elit non", LastUpdated = DateTime.Now.AddDays(-15), Description = "Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit." }
+            };
+			
+    public class Client
+    {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string CompanyName { get; set; }
+        public string Email { get; set; }
+        public string Phone { get; set; }
+        public DateTime? ContactDate { get; set; }
+        public string ClientType { get; set; }
+        public string Notes { get; set; }
+        public Address BillingAddress { get; set; }
+        public Address MailingAddress { get; set; }
+    }		
+			
+			
+	public class Address
+	{
+		public string Street { get; set; }
+		public string City { get; set; }
+		public string State { get; set; }
+		public string Zip { get; set; }
+	}
+	
+	var clientTypes = new List<SelectListItem>()
+                        {
+                            new SelectListItem() { Text = "Small Business" },
+                            new SelectListItem() { Text = "Individual" },
+                            new SelectListItem() { Text = "Corporation" }
+                        };
+
+public IActionResult VerifyEmail(string email)
+        {
+            var emailList = new List<string>()
+            {
+                "test@example.com",
+                "hello@example.com",
+                "world@example.com"
+            };
+
+            if (emailList.Contains(email))
+            {
+                return Json("Email is already taken");
+            }
+
+            return Json(true);
+        }
+		
+		var newClient = new Client();
+            newClient.EmailPromos = new List<EmailPromo>()
+            {
+                new EmailPromo() { Id = 1, Title = "Weekly Deal", IsSubscribed = false },
+                new EmailPromo() { Id = 2, Title = "Holiday Promos", IsSubscribed = false },
+                new EmailPromo() { Id = 3, Title = "Company Newsletter", IsSubscribed = false },
+                new EmailPromo() { Id = 4, Title = "New Products", IsSubscribed = false }
+            };
+
+            return View(newClient);
+
+		
+		 <div class="row">
+            <div class="col-md-6 form-group">
+                <label>Subscribe to:</label>
+                <div>
+                    @for (var i = 0; i < Model.EmailPromos.Count; i++)
+                    {
+                        @Html.CheckBoxFor(e => e.EmailPromos[i].IsSubscribed)
+                        <span>@Model.EmailPromos[i].Title</span>
+                        @Html.HiddenFor(e => e.EmailPromos[i].Id)
+                        @Html.HiddenFor(e => e.EmailPromos[i].Title)
+                    }
+                </div>
+            </div>
+        </div>
+		
+		// Module 4, Lesson 5
+		public async Task<IViewComponentResult> InvokeAsync()
+        {
+            var inventory = new List<InventoryItem>()
+            {
+                new InventoryItem() {  Name = "Banner", Count = 8 },
+                new InventoryItem() {  Name = "Markers", Count = 3 },
+                new InventoryItem() {  Name = "Jacket", Count = 14 },
+                new InventoryItem() {  Name = "Hoodie", Count = 1 },
+                new InventoryItem() {  Name = "Poster", Count = 6 },
+                new InventoryItem() {  Name = "Pens", Count = 16 }
+            };
+
+            return View(inventory);
+        }
+		
+		//Module 4, Lesson 8
+		public async Task<IViewComponentResult> InvokeAsync(int productId)
+        {
+            var products = new List<SurveyProduct>()
+            {
+                new SurveyProduct() { Id = 1, Name = "Hoodies", VoteCount = 8 },
+                new SurveyProduct() { Id = 2, Name = "Banners", VoteCount = 1 },
+                new SurveyProduct() { Id = 3, Name = "Posters", VoteCount = 4 },
+                new SurveyProduct() { Id = 4, Name = "T-Shirts", VoteCount = 2 },
+            };
+
+            if (productId > 0)
+            {
+                products.FirstOrDefault(x => x.Id == productId).VoteCount += 1;
+                return View("Results", products);
+            }
+
+            return View(products);
+        }
+		
+		
+		<script>
+            $(document).ready(function () {
+                $('.vote-up').click(function (e) {
+                        e.preventDefault();
+                        var id = $(this).data('productid')
+                        $.post('/home/vote', { id: id }, function (data) {
+                            $('#surveyWidget').html(data);
+                        })
+                    })
+                })
+        </script>
+		
+	// Module 5, Lesson 7
+		
+		// MVC setup
+		services.AddApplicationInsightsTelemetry(Configuration);
+		services.AddMvc();
+
+		// Autofac setup
+		var builder = new ContainerBuilder();
+		builder.Populate(services);
+		builder.RegisterType<InventoryService>().As<IInventoryService>();
+		builder.RegisterType<SurveyService>().As<ISurveyService>();
+		builder.RegisterType<FormDataService>().As<IFormDataService>();
+		return new AutofacServiceProvider(builder.Build());

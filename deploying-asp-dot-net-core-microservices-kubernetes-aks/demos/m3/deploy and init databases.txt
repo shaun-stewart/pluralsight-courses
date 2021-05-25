@@ -1,0 +1,36 @@
+##create databases for ech service
+az sql db create -g pluralsight -s globoticket -n GloboTicketShoppingbasketDB --service-objective Basic
+
+dotnet ef migrations script -o Shoppingbasket-create.sql
+
+sqlcmd -S tcp:globoticket.database.windows.net,1433 -d GloboTicketShoppingbasketDB -P **** -U globoticket-user -i Shoppingbasket-create.sql
+
+## order database
+az sql db create -g pluralsight -s globoticket -n GloboTicketOrderDb --service-objective Basic
+
+dotnet ef migrations script -o OrderDB-create.sql
+
+sqlcmd -S tcp:globoticket.database.windows.net,1433 -d GloboTicketOrderDb -P **** -U globoticket-user -i OrderDb-create.sql
+
+
+## GloboTicketMarketingDb
+az sql db create -g pluralsight -s globoticket -n GloboTicketMarketingDb --service-objective Basic
+
+dotnet ef migrations script -o MarketingDB-create.sql
+
+sqlcmd -S tcp:globoticket.database.windows.net,1433 -d GloboTicketMarketingDb -P **** -U globoticket-user -i MarketingDB-create.sql
+
+##GloboTicketEventCatalogDb
+az sql db create -g pluralsight -s globoticket -n GloboTicketEventCatalogDb --service-objective Basic
+
+dotnet ef migrations script -o EventCatalogDB-create.sql
+
+sqlcmd -S tcp:globoticket.database.windows.net,1433 -d GloboTicketEventCatalogDb -P **** -U globoticket-user -i EventCatalogDB-create.sql
+
+## GloboTicketDiscountDB
+az sql db create -g pluralsight -s globoticket -n GloboTicketDiscountDB --service-objective Basic
+
+dotnet ef migrations script -o TicketDiscountDB-create.sql
+
+sqlcmd -S tcp:globoticket.database.windows.net,1433 -d GloboTicketDiscountDB -P **** -U globoticket-user -i TicketDiscountDB-create.sql
+

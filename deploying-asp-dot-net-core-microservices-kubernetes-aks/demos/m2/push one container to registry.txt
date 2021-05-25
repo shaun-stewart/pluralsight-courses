@@ -1,0 +1,5 @@
+docker tag globoticketserviceseventcatalog globoticket.azurecr.io/globoticket.services.eventcatalog:100
+docker login globoticket.azurecr.io
+docker push globoticket.azurecr.io/globoticket.services.eventcatalog:100
+
+kubectl create secret generic eventcatalog-db --from-literal=connectionstring="Data Source=<yourdbserver>;Initial Catalog=GloboTicketEventcatalogDB;Integrated Security=False;User ID=globoticket-user;Password=**********;Connect Timeout=60;Encrypt=False;TrustServerCertificate=True;ApplicationIntent=ReadWrite;"

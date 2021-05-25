@@ -1,0 +1,7 @@
+This folder contains all files used in this course.
+
+The source files themselves can be found on GitHub at the following location:
+https://github.com/vriesmarcel/deploying-asp-dot-net-core-microservices-kubernetes-aks
+Every branch contains the files as needed for that particular demo, so please
+be aware of the various branches used.
+
